@@ -1,0 +1,10 @@
+
+.text {
+  font-size: 32px;
+  color: #333333;
+  transition: color .4s ease-in-out;
+
+  &:hover {
+    color: #777777;
+  }
+}
