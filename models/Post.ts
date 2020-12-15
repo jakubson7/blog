@@ -1,6 +1,6 @@
-import mongoose, { Document, Schema, model } from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
 
-interface Post extends Document {
+export interface Post extends Document {
   name: string;
   author: string;
   content: string;

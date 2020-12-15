@@ -7,13 +7,17 @@ connectDatabase();
 
 export default connect()
   .get(async ({ query }: NextApiRequest, response: NextApiResponse) => {
-    const post = await Post.findById(query.id);
-    response.status(200).json(post.toJSON());
+    try {
+      const post = await Post.findOne({ name: query.name[0] });
+      response.status(200).json({ error: null, post: post.toJSON()});
+    } catch(error) {
+      response.status(200).json({ error, post: null });
+    }
   })
   .post(async ({ query, body }: NextApiRequest, response: NextApiResponse) => {
     try {
       const post = await Post.create({
-        name: query.id[0],
+        name: query.name[0],
         author: body.author,
         content: body.content,
       });
@@ -22,13 +26,4 @@ export default connect()
     } catch(error) {
       response.status(200).json({ error });
     }
-  })
-  .put(async ({ query, body }: NextApiRequest, response: NextApiResponse) => {
-    const post = await Post.findById(query.id);
-    await post.update({
-      content: body.content,
-    });
-  })
-  .delete(async ({ query, body }: NextApiRequest, response: NextApiResponse) => {
-    await Post.findByIdAndDelete(query.id);
   });
