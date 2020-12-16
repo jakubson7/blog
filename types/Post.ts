@@ -1,6 +1,6 @@
 
 interface Post {
-  name: string;
+  path: string;
   author: string;
   header: string;
   content: string;

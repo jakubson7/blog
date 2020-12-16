@@ -37,12 +37,12 @@ export const getStaticPaths: GetStaticPaths<{ name: string }> = async context =>
     const posts = await Post.find({});
 
     return {
-      fallback: false,
-      paths: posts.reduce((paths, post) => [...paths, { params: { name: post.name }}], []),
+      fallback: 'blocking',
+      paths: posts.reduce((paths, post) => [...paths, { params: { name: post.path }}], []),
     }
   } catch(error) {
     return {
-      fallback: 'blocking',
+      fallback: false,
       paths: [{ params: { name: 'error' }}],
     }
   }
@@ -51,7 +51,8 @@ export const getStaticPaths: GetStaticPaths<{ name: string }> = async context =>
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     await connectDatabase();
-    const post = (await Post.findOne({ name: params.name[0] })).toJSON();
+    // @ts-ignore
+    const post = (await Post.findOne({ path: params.name })).toJSON();
 
     return {
       props: {

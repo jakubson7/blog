@@ -10,7 +10,6 @@ const NewPostPage: React.FC = () => {
   }
   const handleSave = async input => {
     axios.post(`/api/post/${header}`, {
-      name: header.replaceAll(' ', '-').replace(/[!@#$%^&*_()[]{}="']/g, ''),
       header,
       content: input,
       author: 'test',

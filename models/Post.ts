@@ -4,7 +4,7 @@ import PostType from '@@types/Post';
 interface PostModel extends PostType, Document {};
 
 const postSchema = new Schema({
-  name: {
+  path: {
     type: String,
     maxlength: [128, 'name cannot be more than 128 characters'],
     required: true,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Markdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import CodeSynthax from './CodeSynthax';
@@ -9,7 +9,13 @@ interface Props {
 }
 
 const Editor: React.FC<Props> = ({ save, content }) => {
-  const [input, setInput] = useState<string>(content);
+  const [input, setInput] = useState<string>(content || '');
+  const textareaElement = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    setInput(content);
+    textareaElement.current.value = content;
+  }, [content]);
 
   const handleChange = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     setInput(event.currentTarget.value);
@@ -22,7 +28,7 @@ const Editor: React.FC<Props> = ({ save, content }) => {
     <div className='wraper'>
       <div className='editor'>
         <section className='input'>
-          <textarea  onKeyUp={handleChange}></textarea>
+          <textarea onKeyUp={handleChange} ref={textareaElement}></textarea>
         </section>
         <section className='output'>
           <Markdown
@@ -37,7 +43,7 @@ const Editor: React.FC<Props> = ({ save, content }) => {
       </div>
       <section className='control'>
         <button onClick={handleSave}>
-          add post
+          save
         </button>
       </section>
     </div>
