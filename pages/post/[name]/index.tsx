@@ -5,6 +5,7 @@ import Post from '@models/Post';
 import connectDatabase from '@utils/connectDatabase';
 import Markdown from 'react-markdown';
 import gfm from 'remark-gfm';
+import CodeSynthax from '@components/CodeSynthax';
 
 interface Props {
   post: PostType | null;
@@ -17,7 +18,13 @@ const PostPage: React.FC<Props> = ({ post }) => {
       <article>
         <header>{post.header}</header>
         <p className='markdown'>
-          <Markdown plugins={[[ gfm ]]} source={post.content} />
+          <Markdown
+            plugins={[[ gfm ]]}
+            source={post.content}
+            renderers={{
+              code: CodeSynthax,
+            }}
+          />
         </p>
       </article>
     </div>
@@ -35,7 +42,7 @@ export const getStaticPaths: GetStaticPaths<{ name: string }> = async context =>
     }
   } catch(error) {
     return {
-      fallback: false,
+      fallback: 'blocking',
       paths: [{ params: { name: 'error' }}],
     }
   }
@@ -57,6 +64,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         post: null,
         error: JSON.parse(JSON.stringify(error)),
       },
+      revalidate: 60,
     }
   }
 }

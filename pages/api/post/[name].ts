@@ -27,4 +27,13 @@ export default connect()
     } catch(error) {
       response.status(200).json({ error });
     }
+  })
+  .put(async ({ query, body }: NextApiRequest, response: NextApiResponse) => {
+    try {
+      const post = await Post.findOne({ name: query.name[0] });
+      post.update({ content: body.content })
+      response.status(200).json({ error: null });
+    } catch(error) {
+      response.status(200).json({ error });
+    }
   });

@@ -1,0 +1,64 @@
+
+.new-post-page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  
+  header {
+    margin: 20px;
+
+    p {
+      font-size: 32px;
+      color: #555555;
+      outline: none;
+    }
+  }
+  .wraper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .editor {
+      display: flex;
+      flex-direction: row;
+  
+      .input {
+        width: 40vw;
+  
+        textarea {
+          width: 100%;
+          border: none;
+          border-right: 2px solid #eeeeee;
+          outline: none;
+          resize: none;
+          margin: 0;
+          padding: 40px;
+          min-height: 60vh;
+        }
+      }
+      .output {
+        width: 40vw;
+
+        .markdown {
+          width: 100%;
+          padding: 22px;
+        }
+      }
+    }
+
+    .control {
+      button {
+        margin-top: 40px;
+        width: 160px;
+        height: 60px;
+        border-radius: 16px;
+        outline: none;
+        background-color: #555555;
+        border: none;
+        color: #ffffff;
+        font-size: 24px;
+        cursor: pointer;
+      }
+    }
+  }
+}
