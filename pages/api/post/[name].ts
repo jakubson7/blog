@@ -20,6 +20,7 @@ export default connect()
         name: query.name[0],
         author: body.author,
         content: body.content,
+        header: body.header,
       });
       await post.save();
       response.status(200).json({ error: null });

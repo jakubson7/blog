@@ -1,19 +1,25 @@
 import React from 'react';
+import PostType from '@@types/Post';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import Post, { Post as PostInterface } from '@models/Post';
+import Post from '@models/Post';
 import connectDatabase from '@utils/connectDatabase';
+import Markdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 interface Props {
-  post: PostInterface | null;
+  post: PostType | null;
   error: any | null;
 }
 
 const PostPage: React.FC<Props> = ({ post }) => {
   return (
-    <div>
-      <pre>
-        {JSON.stringify(post)}
-      </pre>
+    <div className='page post-page'>
+      <article>
+        <header>{post.header}</header>
+        <p className='markdown'>
+          <Markdown plugins={[[ gfm ]]} source={post.content} />
+        </p>
+      </article>
     </div>
   );
 }
@@ -28,7 +34,6 @@ export const getStaticPaths: GetStaticPaths<{ name: string }> = async context =>
       paths: posts.reduce((paths, post) => [...paths, { params: { name: post.name }}], []),
     }
   } catch(error) {
-    console.log(error);
     return {
       fallback: false,
       paths: [{ params: { name: 'error' }}],
@@ -39,7 +44,7 @@ export const getStaticPaths: GetStaticPaths<{ name: string }> = async context =>
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     await connectDatabase();
-    const post = await Post.findOne({ name: params.name[0] });
+    const post = (await Post.findOne({ name: params.name[0] })).toJSON();
 
     return {
       props: {

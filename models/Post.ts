@@ -1,12 +1,9 @@
 import { Document, Schema, model } from 'mongoose';
+import PostType from '@@types/Post';
 
-export interface Post extends Document {
-  name: string;
-  author: string;
-  content: string;
-}
+interface PostModel extends PostType, Document {};
 
-const PostSchema = new Schema({
+const postSchema = new Schema({
   name: {
     type: String,
     maxlength: [128, 'name cannot be more than 128 characters'],
@@ -15,13 +12,19 @@ const PostSchema = new Schema({
   },
   author: {
     type: String,
-    maxlength: [256, 'author cannot be more tahn 128 characters'],
+    maxlength: [64, 'author cannot be more tahn 64 characters'],
     required: true,
+  },
+  header: {
+    type: String,
+    required: true,
+    maxlength: [128, 'header cannot be more than 128 characters'],
   },
   content: {
     type: String,
     required: true,
+    maxlength: [65536, 'content cannot be more than 65536 characters'],
   },
 });
 
-export default model<Post>('post', PostSchema);
+export default model<PostModel>('post', postSchema);

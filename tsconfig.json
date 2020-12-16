@@ -24,7 +24,7 @@
       "@utils/*": ["utils/*"],
       "@styles/*": ["styles/*"],
       "@public/*": ["public/*"],
-      "@types/*": ["types/*"]
+      "@@types/*": ["types/*"]
     }
   },
   "include": [
