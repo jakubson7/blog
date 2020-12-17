@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Editor from '@components/Editor';
 import axios from 'axios';
+import convertToPath from '@utils/convertToPath';
 
 const NewPostPage: React.FC = () => {
   const [header, setHeader] = useState<string>('name of your new post');
@@ -9,7 +10,7 @@ const NewPostPage: React.FC = () => {
     setHeader(event.currentTarget.textContent);
   }
   const handleSave = async input => {
-    axios.post(`/api/post/${header}`, {
+    axios.post(`/api/post/${convertToPath(header)}`, {
       header,
       content: input,
       author: 'test',

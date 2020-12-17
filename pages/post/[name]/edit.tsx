@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Editor from '@components/Editor';
 import axios from 'axios';
-import convertToPath from '@utils/convertToPath';
 
 const NewPostPage: React.FC = () => {
   const [header, setHeader] = useState<string>('loading...');
@@ -13,6 +12,7 @@ const NewPostPage: React.FC = () => {
     query.name && (async () => {
       const { data } = await axios.get(`/api/post/${query.name}`)
       const { error, post } = data;
+      console.log({ header, content, post });
 
       if(error) {
         setHeader('-- error --');

@@ -10,18 +10,18 @@ export default connect()
   .get(async ({ query }: NextApiRequest, response: NextApiResponse) => {
     try {
       // @ts-ignore
-      const post = await Post.findOne({ path: 'name-of-your-new-post' });
+      const post = await Post.findOne({ path: query.name });
       response.status(200).json({ error: null, post: post.toJSON()});
     } catch(error) {
-      console.log(error);
       response.status(200).json({ error, post: null });
     }
   })
   .post(async ({ query, body }: NextApiRequest, response: NextApiResponse) => {
+    console.log({ query, body });
     try {
       const post = await Post.create({
         // @ts-ignore
-        path: convertToPath(query.name),
+        path: query.name,
         author: body.author,
         content: body.content,
         header: body.header,

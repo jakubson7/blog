@@ -65,7 +65,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         post: null,
         error: JSON.parse(JSON.stringify(error)),
       },
-      revalidate: 60,
+      revalidate: 1,
     }
   }
 }
