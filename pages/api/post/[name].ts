@@ -2,7 +2,6 @@ import connectDatabase from '@utils/connectDatabase';
 import connect from 'next-connect';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Post from '@models/Post';
-import convertToPath from '@utils/convertToPath';
 
 connectDatabase();
 
